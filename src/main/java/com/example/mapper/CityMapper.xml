@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.CityMapper">
+
+<resultMap type="com.example.domain.City" id="cityWithCountry">
+	<id 	property="id" column="city_id"/>
+		<result property="name" column="city_name"/>
+		<result property="countryCode" column="city_country_code"/>
+		<result property="district" column="city_district"/>
+		<result property="population" column="city_population"/>
+	<association property="country" javaType="com.example.domain.Country">
+		<id 	property="code" 		  column="country_code"/>
+		<result property="name" 		  column="country_name"/>
+		<result property="continent" 	  column="country_CONTINENT"/>
+		<result property="region" 		  column="country_region"/>
+		<result property="surfaceArea"    column="country_SURFACE_AREA"/>
+		<result property="indepYear" 	  column="country_INDEP_YEAR"/>
+		<result property="population" 	  column="country_POPULATION"/>
+		<result property="lifeExpectancy" column="country_LIFE_EXPECTANCY"/>
+		<result property="gnp" 			  column="country_GNP"/>
+		<result property="gnpOld" 		  column="country_GNP_OLD"/>
+		<result property="localname" 	  column="country_LOCALNAME"/>
+		<result property="governmentForm" column="country_GOVERNMENT_FORM"/>
+		<result property="headOfState" 	  column="country_HEAD_OF_STATE"/>
+		<result property="capital" 	 	  column="country_CAPITAL"/>
+		<result property="code2" 		  column="country_code2"/>
+	</association>
+</resultMap>
+
+<select id="selectAllWithCoutnry" resultMap="cityWithCountry">
+	select  
+			c1.ID 			  	as city_ID,
+			c1.NAME 			as city_NAME,
+			c1.COUNTRY_CODE 	as city_COUNTRY_CODE,
+			c1.DISTRICT 		as city_DISTRICT,
+			c1.POPULATION 	  	as city_POPULATION,
+			c2.code 			as country_code,
+			c2.name 			as country_name,
+			c2.CONTINENT 	  	as country_CONTINENT,
+			c2.region 		  	as country_region,
+			c2.SURFACE_AREA 	as country_SURFACE_AREA,
+			c2.INDEP_YEAR 	  	as country_INDEP_YEAR,
+			c2.POPULATION 	  	as country_POPULATION,
+			c2.LIFE_EXPECTANCY 	as country_LIFE_EXPECTANCY,
+			c2.GNP 			  	as country_GNP,
+			c2.GNP_OLD 		  	as country_GNP_OLD,
+			c2.LOCALNAME       	as country_LOCALNAME,
+			c2.GOVERNMENT_FORM 	as country_GOVERNMENT_FORM,
+			c2.HEAD_OF_STATE   	as country_HEAD_OF_STATE,
+			c2.CAPITAL 		  	as country_CAPITAL,
+			c2.code2 		 	as country_code2
+	from city c1 left outer join country c2
+	on c1.Country_CODE = c2.CODE
+	where c1.country_code = 'KOR'
+</select>
+
+<select id="selectPageWithCountry" resultMap="cityWithCountry">
+	select  
+			c1.ID 			  	as city_ID,
+			c1.NAME 			as city_NAME,
+			c1.COUNTRY_CODE 	as city_COUNTRY_CODE,
+			c1.DISTRICT 		as city_DISTRICT,
+			c1.POPULATION 	  	as city_POPULATION,
+			c2.code 			as country_code,
+			c2.name 			as country_name,
+			c2.CONTINENT 	  	as country_CONTINENT,
+			c2.region 		  	as country_region,
+			c2.SURFACE_AREA 	as country_SURFACE_AREA,
+			c2.INDEP_YEAR 	  	as country_INDEP_YEAR,
+			c2.POPULATION 	  	as country_POPULATION,
+			c2.LIFE_EXPECTANCY 	as country_LIFE_EXPECTANCY,
+			c2.GNP 			  	as country_GNP,
+			c2.GNP_OLD 		  	as country_GNP_OLD,
+			c2.LOCALNAME       	as country_LOCALNAME,
+			c2.GOVERNMENT_FORM 	as country_GOVERNMENT_FORM,
+			c2.HEAD_OF_STATE   	as country_HEAD_OF_STATE,
+			c2.CAPITAL 		  	as country_CAPITAL,
+			c2.code2 		 	as country_code2
+	from city c1 left outer join country c2
+	on c1.Country_CODE = c2.CODE
+	offset #{firstItem}-1 rows
+	fetch next #{itemsPerPage} rows only
+</select>
+
+<select id="selectByIdWithCountry" resultMap="cityWithCountry">
+	select  
+			c1.ID 			  	as city_ID,
+			c1.NAME 			as city_NAME,
+			c1.COUNTRY_CODE 	as city_COUNTRY_CODE,
+			c1.DISTRICT 		as city_DISTRICT,
+			c1.POPULATION 	  	as city_POPULATION,
+			c2.code 			as country_code,
+			c2.name 			as country_name,
+			c2.CONTINENT 	  	as country_CONTINENT,
+			c2.region 		  	as country_region,
+			c2.SURFACE_AREA 	as country_SURFACE_AREA,
+			c2.INDEP_YEAR 	  	as country_INDEP_YEAR,
+			c2.POPULATION 	  	as country_POPULATION,
+			c2.LIFE_EXPECTANCY 	as country_LIFE_EXPECTANCY,
+			c2.GNP 			  	as country_GNP,
+			c2.GNP_OLD 		  	as country_GNP_OLD,
+			c2.LOCALNAME       	as country_LOCALNAME,
+			c2.GOVERNMENT_FORM 	as country_GOVERNMENT_FORM,
+			c2.HEAD_OF_STATE   	as country_HEAD_OF_STATE,
+			c2.CAPITAL 		  	as country_CAPITAL,
+			c2.code2 		 	as country_code2
+	from city c1 left outer join country c2
+	on c1.Country_CODE = c2.CODE
+	where c1.id = #{id}
+</select>
+</mapper>
